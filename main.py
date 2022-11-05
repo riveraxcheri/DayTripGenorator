@@ -23,28 +23,27 @@ def select_destination(destination_list):
     selected_destination = random.choice(destination_list)
     return selected_destination
 
-user_destination = select_destination(destinations)
 
 ## Restaurants
 def select_restaurant(restaurant_list):
     selected_restaurant = random.choice(restaurant_list)
     return selected_restaurant
 
-user_restaurant = select_restaurant(restaurants)
+
 
 ## Entertainment
 def select_entertainment(entertainment_list):
     selected_entertainment = random.choice(entertainment_list)
     return selected_entertainment
 
-user_entertainment = select_entertainment(entertainment)
+
 
 ## Transportation
 def select_transportation(transportation_list):
     selected_transport = random.choice(transportation_list)
     return selected_transport
 
-user_transportation = select_transportation(transportation)
+
 
 def reselect_destination(destination_list):
     return (random.choice(destination_list))
@@ -62,22 +61,40 @@ def reselect_destination(destination_list):
 
 #Trip Details
 
-def gen_full_trip():
+def gen_full_trip(d,r,e,t):
     return (f"""
-    Destination: {select_destination(destinations)}
-    Restaurant: {select_restaurant(restaurants)}
-    Entertainment: {select_entertainment(entertainment)}
-    Transportation: {select_transportation(transportation)}
+    Destination: {d}
+    Restaurant: {r}
+    Entertainment: {e}
+    Transportation: {t}
     """)
 
-def determine_satisfaction(): 
+def determine_satisfaction(d,r,e,t): 
     confirm_bool = True
     while confirm_bool:
+        d=d
+        r=r
+        e=e
+        t=t
         user_input = input("Are you satisfied with your trip? (y/n) ")
         if user_input == "n":
-            print (gen_full_trip()) and determine_satisfaction()
-        else:
+            user_reselect = input ("What to change? d, r, e, t ")
+            if user_reselect == "d":
+                d = select_destination(destinations)
+            elif user_reselect == "r":
+                r = select_destination(restaurants)
+            elif user_reselect == "e":
+                e = select_destination(entertainment)
+            elif user_reselect == "t":
+                t = select_destination(transportation)
+            print (gen_full_trip(d,r,e,t)) 
+            return determine_satisfaction(d,r,e,t)
+        elif user_input == "y":
             confirm_bool = False
+        else:
+            print ("message")
+            continue
+    print (gen_full_trip(d,r,e,t)) 
     return final_msg()
 
 # def display_new_trip():
@@ -90,15 +107,20 @@ def determine_satisfaction():
 
 # Ending
 
-def final_msg():
-    print (f"""
+def final_msg(): 
+    return (f"""
     Thank you for traveling with us!
     Enjoy your day!""")
 
 # Calling the functions
 
-greeting()
-print (gen_full_trip())
-determine_satisfaction()
+def dtg():
+    greeting()
+    user_destination = select_destination(destinations)
+    user_restaurant = select_restaurant(restaurants)
+    user_entertainment = select_entertainment(entertainment)
+    user_transportation = select_transportation(transportation)
+    print (gen_full_trip(user_destination, user_restaurant, user_entertainment, user_transportation))
+    return determine_satisfaction()
 
-
+print (dtg())
