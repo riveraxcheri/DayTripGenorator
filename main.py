@@ -121,6 +121,6 @@ def dtg():
     user_entertainment = select_entertainment(entertainment)
     user_transportation = select_transportation(transportation)
     print (gen_full_trip(user_destination, user_restaurant, user_entertainment, user_transportation))
-    return determine_satisfaction()
+    return determine_satisfaction(user_destination, user_restaurant, user_entertainment, user_transportation)
 
 print (dtg())
